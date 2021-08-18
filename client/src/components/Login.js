@@ -1,8 +1,7 @@
-//import { useHistory} from 'react-router-dom'
 import React, {useState} from 'react'
 import styled from "styled-components";
 import LoginForm from "../components/LoginForm"
-import SigninForm from "../components/SigninForm"
+import SignupForm from "../components/SignupForm"
 import { Logo, Divider, Button} from './styled';
 
 function Login({ onLogin }) {
@@ -11,7 +10,7 @@ function Login({ onLogin }) {
     return (
         <>
         <Wrapper>
-            <Logo>Transport Or Deliver</Logo>
+            <Logo>Transport Delivery</Logo>
             {showLogin ? (
                 <>
                     <LoginForm onLogin={onLogin} />
@@ -25,7 +24,7 @@ function Login({ onLogin }) {
                 </>
             ) : (
                 <>
-                    <SignUpForm onLogin={onLogin} />
+                    <SignupForm onLogin={onLogin} />
                     <Divider />
                     <p>
                         Already have an account? &nbsp;
