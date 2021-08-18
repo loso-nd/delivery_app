@@ -2,7 +2,7 @@
 import React, {useState} from 'react'
 import {Button, Error, Input, FormField, Label} from './styled';
 
-function LoginForm({setUser}) {
+function LoginForm({ onLogin }) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState(null)
@@ -17,48 +17,67 @@ function LoginForm({setUser}) {
             username,
             password,
         }
-        async function login() {
-            const res = await fetch('log_in', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({user})
-        });
-        const userData = await res.json();
-        //create has a different status than ok, if the log in is successfull the promise should return a userData.id that should exist in the database.
-        if(userData.id){
-            console.log(userData);
-            setUser(userData)
-            history.push('/')
-        } else {
-            setErrors(userData.message) //How can I display errors on my screen?
-        }
+            async function login() {
+                const res = await fetch('log_in', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({user})
+            });
+            const userData = await res.json();
+            //create has a different status than ok, if the log in is successfull the promise should return a userData.id that should exist in the database.
+            //if(userData.id){
+            if(res.ok){
+                setIsLoading(false);
+                console.log(userData);
+                onLogin(userData)
+            } else {
+                const err = await res.json();
+                setErrors(err.errors) //How can I display errors on my screen?
+            }
+            };
+        login();
     };
 
     return (
         <>
-            <Form onSubmit={handleSubmit}>
-                <h1>Log In</h1>
+            <form  onSubmit={handleSubmit}>
+            <FormField>
+                <Label htmlFor="username"> Username</Label>
                 <Input
                     type="text"
+                    id="username"
+                    autoComplete="off"
                     placeholder="User Name"
                     value={username}
                     name="username"  
                     onChange={(e) => setUsername(e.target.value)} 
 
                 ></Input>
+            </FormField>
+            <FormField>
+                <Label htmlFor="password"> Password</Label>
                 <Input
-                    type="text"
+                    type="password"
+                    id="username"
+                    autoComplete="current-password"
                     placeholder="Password"
                     value={password}
                     name="password"  
                     onChange={(e) => setPassword(e.target.value)} 
                 ></Input>
-
-                <Input submit type="submit" value="Log in"></Input>
-                {errors?errors.map(error => <div key={error.id}>{error}</div>):null}
-            </Form>
+            </FormField>
+            <FormField>
+                <Button variant="outline" color="secondary" type="submit">
+                    {isLoading ? "Loading..." : "Login"}
+                </Button>
+            </FormField>
+            <FormField>
+                {errors.map(error => (<Error key={err}>err</Error>))}
+            {/* {errors?errors.map(error => <div key={error.id}>{error}</div>):null} */}
+            </FormField>
+            </form>
         </>
     )
 }
