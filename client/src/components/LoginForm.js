@@ -1,6 +1,7 @@
 //import { useHistory} from 'react-router-dom'
 import React, {useState} from 'react'
-import {Button, Error, Input, FormField, Label} from './styled';
+import {Button, Error, Input, FormField, Label} from "../styles";
+
 
 function LoginForm({ onLogin }) {
     const [username, setUsername] = useState('')
