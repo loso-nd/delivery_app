@@ -1,37 +1,37 @@
 import React, {useState} from 'react'
-import {Button, Error, Input, FormField, Label} from "../styles";
+import {Button, Input, FormField, Label} from "../styles";
 
-function LoginForm({ onLogin }) {
+function LoginForm({ onLogin}) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+
+    // const history = useHistory()
 
     function handleSubmit(e){ // why or why not use async here...
         e.preventDefault()
         setIsLoading(true);
-        const user = {
-            username,
-            password,
-        }
-            async function login() {
-                const res = await fetch('log_in', {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({user})
-            });
-            const userData = await res.json();
+        async function login(){
+            const res = await fetch("/login", {
+               method: "POST",
+               headers: {
+                 "Content-Type": "application/json",
+               },
+               body: JSON.stringify({ username, password }),
+             })
+            // const userData = await res.json();
             //create has a different status than ok, if the log in is successfull the promise should return a userData.id that should exist in the database.
             //if(userData.id){
-            if(res.ok){
-                setIsLoading(false);
+                const userData = await res.json();
+            if(userData.id){
                 console.log(userData);
+                setErrors(null)
+                //history.push("/")
                 onLogin(userData)
             } else {
-                const err = await res.json();
-                setErrors(err.errors) //How can I display errors on my screen?
+                setIsLoading(false);
+                setErrors(userData.errors) //How can I display errors on my screen?
             }
             };
         login();
@@ -39,7 +39,7 @@ function LoginForm({ onLogin }) {
 
     return (
         <>
-            <form  onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <FormField>
                     <Label htmlFor="username"> Username</Label>
                     <Input
@@ -70,11 +70,7 @@ function LoginForm({ onLogin }) {
                         {isLoading ? "Loading..." : "Login"}
                     </Button>
                 </FormField>
-                <FormField>
-                    {errors.map((err) => (
-                        <Error key={err}>{err}</Error>
-                    ))}
-                </FormField>
+                {errors ? errors.map(error => <div key={error}>{error}</div>):null}
             </form>
         </>
     )

@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) => ({
       margin: '30px'
     },
   }));
+
+  function handleBooking(){
+    console.log("I have been clicked")
+  }
   
   // import styled from 'styled-components'
 
@@ -26,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
 // or less ideally
 //import { Card } from 'react-bootstrap';
 
-function ItemCard({ company }) {
+function HomeCard({ company }) {
         const classes = useStyles();
 
         return (
-          <div>
+          <div onClick={handleBooking} >
             <Grid container spacing={6}>
               <Grid item={12}>
                 <Paper className={classes.paper}>{company.company_name}
@@ -44,4 +48,4 @@ function ItemCard({ company }) {
     );
 }
 
-export default ItemCard;
+export default HomeCard;

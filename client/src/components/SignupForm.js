@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Button, Error, Input, FormField, Label } from '../styles'
 
- function SignupForm({onLogin}) {
+ function SignupForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -26,8 +26,9 @@ import { Button, Error, Input, FormField, Label } from '../styles'
             });
             setIsLoading(false);
             if(res.ok){
-                const userData = await res.json();
-                onLogin(userData);
+                const user = await res.json();
+                //onLogin(user);
+                console.log(user)
             }
             else {
                 const err = await res.json();
@@ -59,8 +60,7 @@ import { Button, Error, Input, FormField, Label } from '../styles'
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
                     />
-                </FormField>
-                
+                </FormField>         
                 <FormField>
                     <Label htmlFor="email">Email</Label>
                     <Input

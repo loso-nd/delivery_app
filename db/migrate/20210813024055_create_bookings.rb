@@ -3,10 +3,10 @@ class CreateBookings < ActiveRecord::Migration[6.1]
     create_table :bookings do |t|
       t.integer :user_id
       t.integer :company_id
-      t.string :pickup_location
+      t.string :pickup
       t.string :destination
       t.integer :time
-      t.string :ship_status
+      t.string :status
       t.string :speciality
 
       t.timestamps

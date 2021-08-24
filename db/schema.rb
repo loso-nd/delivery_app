@@ -18,10 +18,10 @@ ActiveRecord::Schema.define(version: 2021_08_13_024839) do
   create_table "bookings", force: :cascade do |t|
     t.integer "user_id"
     t.integer "company_id"
-    t.string "pickup_location"
+    t.string "pickup"
     t.string "destination"
     t.integer "time"
-    t.string "ship_status"
+    t.string "status"
     t.string "speciality"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 2021_08_13_024839) do
     t.string "company_name"
     t.string "speciality"
     t.integer "ratings"
-    t.string "image_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -3,7 +3,7 @@ import { NavBar } from "./styled";
 import { NavLink } from "react-router-dom";
 
 
-function Navbar({user}) {
+function Navbar() {
   return (
     <NavBar>
         {/* <h1  style={{color: "red", textAlign:'center', marginRight: 30}}>{user.username}</h1> */}
@@ -11,26 +11,34 @@ function Navbar({user}) {
         exact
         activeClassName="active"
         to="/"
-      >
-        Home
+      > Home
       </NavLink>
+
+      <NavLink
+        exact
+        activeClassName="active"
+        to="/users/:id"
+      >View Profile
+      </NavLink>
+
       <NavLink
         exact
         activeClassName="active"
         to="/bookings/new"
-      >
-        Booking Form
+      >Book Transport
       </NavLink>
+
       <NavLink
         exact
         activeClassName="active"
-        to="/sign_up"
-      >Sign up
+        to="/bookings"
+      >Booking History
       </NavLink>
+
       <NavLink
         exact
         activeClassName="active"
-        to="/log_in"
+        to="/login"
       >
         Log in
       </NavLink>
